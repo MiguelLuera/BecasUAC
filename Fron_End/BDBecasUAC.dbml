@@ -1,0 +1,240 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="BDBecasUAC" Class="BDBecasUACDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=localhost;Initial Catalog=BDBecasUAC;Integrated Security=True" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="BDBecasUACConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.TUsuario" Member="TUsuario">
+    <Type Name="TUsuario">
+      <Column Name="IdUsuario" Type="System.String" DbType="Char(5) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Correo" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Nombres" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Apellidos" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Celular" Type="System.String" DbType="VarChar(9) NOT NULL" CanBeNull="false" />
+      <Column Name="Direccion" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="TipDocumento" Type="System.String" DbType="VarChar(1) NOT NULL" CanBeNull="false" />
+      <Column Name="NumDocIdentidad" Type="System.String" DbType="VarChar(15) NOT NULL" CanBeNull="false" />
+      <Column Name="Contrasena" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="estado" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="urlImagen" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Association Name="TUsuario_TEncargado_BU" Member="TEncargado_BU" ThisKey="IdUsuario" OtherKey="IdUsuario" Type="TEncargado_BU" />
+      <Association Name="TUsuario_TEstudiante" Member="TEstudiante" ThisKey="IdUsuario" OtherKey="IdUsuario" Type="TEstudiante" />
+      <Association Name="TUsuario_TSolicitudBeca" Member="TSolicitudBeca" ThisKey="IdUsuario" OtherKey="IdUsuario" Type="TSolicitudBeca" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TEncargado_BU" Member="TEncargado_BU">
+    <Type Name="TEncargado_BU">
+      <Column Name="IdUsuario" Type="System.String" DbType="Char(5) NOT NULL" CanBeNull="false" />
+      <Association Name="TUsuario_TEncargado_BU" Member="TUsuario" ThisKey="IdUsuario" OtherKey="IdUsuario" Type="TUsuario" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TEscuela" Member="TEscuela">
+    <Type Name="TEscuela">
+      <Column Name="IdEscuela" Type="System.String" DbType="Char(5) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Nombre" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Num_Estudiante" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="TEscuela_TEstudiante" Member="TEstudiante" ThisKey="IdEscuela" OtherKey="IdEscuela" Type="TEstudiante" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TEstudiante" Member="TEstudiante">
+    <Type Name="TEstudiante">
+      <Column Name="IdUsuario" Type="System.String" DbType="Char(5) NOT NULL" CanBeNull="false" />
+      <Column Name="IdEscuela" Type="System.String" DbType="Char(5) NOT NULL" CanBeNull="false" />
+      <Association Name="TEscuela_TEstudiante" Member="TEscuela" ThisKey="IdEscuela" OtherKey="IdEscuela" Type="TEscuela" IsForeignKey="true" />
+      <Association Name="TUsuario_TEstudiante" Member="TUsuario" ThisKey="IdUsuario" OtherKey="IdUsuario" Type="TUsuario" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TModalidadBeca" Member="TModalidadBeca">
+    <Type Name="TModalidadBeca">
+      <Column Name="IdModalidadBeca" Type="System.String" DbType="Char(5) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Nombre_Modalidad" Type="System.String" DbType="VarChar(55) NOT NULL" CanBeNull="false" />
+      <Column Name="Porcentaje_por_escuela" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Association Name="TModalidadBeca_TRequisitosBeca" Member="TRequisitosBeca" ThisKey="IdModalidadBeca" OtherKey="IdModalidadBeca" Type="TRequisitosBeca" />
+      <Association Name="TModalidadBeca_TSolicitudBeca" Member="TSolicitudBeca" ThisKey="IdModalidadBeca" OtherKey="IdModalidadBeca" Type="TSolicitudBeca" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TObservacion" Member="TObservacion">
+    <Type Name="TObservacion">
+      <Column Name="idObservacion" Type="System.String" DbType="Char(5) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="idDocumentoEntregado" Type="System.String" DbType="Char(5)" CanBeNull="true" />
+      <Column Name="Descripcion" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+      <Column Name="FechaObservacion" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Association Name="TDocumentoEntregado_TObservacion" Member="TDocumentoEntregado" ThisKey="idDocumentoEntregado" OtherKey="idDocumentoEntregado" Type="TDocumentoEntregado" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TRequisitosBeca" Member="TRequisitosBeca">
+    <Type Name="TRequisitosBeca">
+      <Column Name="idRequisitos" Type="System.String" DbType="Char(5) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="IdModalidadBeca" Type="System.String" DbType="Char(5) NOT NULL" CanBeNull="false" />
+      <Column Name="idDocumentoRequisito" Type="System.String" DbType="Char(5) NOT NULL" CanBeNull="false" />
+      <Column Name="opcional" Type="System.String" DbType="VarChar(15) NOT NULL" CanBeNull="false" />
+      <Association Name="TRequisitosBeca_TDocumentoEntregado" Member="TDocumentoEntregado" ThisKey="idRequisitos" OtherKey="idRequisitos" Type="TDocumentoEntregado" />
+      <Association Name="TModalidadBeca_TRequisitosBeca" Member="TModalidadBeca" ThisKey="IdModalidadBeca" OtherKey="IdModalidadBeca" Type="TModalidadBeca" IsForeignKey="true" />
+      <Association Name="TDocumentoRequisito_TRequisitosBeca" Member="TDocumentoRequisito" ThisKey="idDocumentoRequisito" OtherKey="idDocumentoRequisito" Type="TDocumentoRequisito" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TSolicitudBeca" Member="TSolicitudBeca">
+    <Type Name="TSolicitudBeca">
+      <Column Name="IdSolicitud" Type="System.String" DbType="Char(5) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="FecRegistro" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="Estado" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="IdUsuario" Type="System.String" DbType="Char(5) NOT NULL" CanBeNull="false" />
+      <Column Name="IdModalidadBeca" Type="System.String" DbType="Char(5) NOT NULL" CanBeNull="false" />
+      <Association Name="TSolicitudBeca_TDocumentoEntregado" Member="TDocumentoEntregado" ThisKey="IdSolicitud" OtherKey="IdSolicitud" Type="TDocumentoEntregado" />
+      <Association Name="TUsuario_TSolicitudBeca" Member="TUsuario" ThisKey="IdUsuario" OtherKey="IdUsuario" Type="TUsuario" IsForeignKey="true" />
+      <Association Name="TModalidadBeca_TSolicitudBeca" Member="TModalidadBeca" ThisKey="IdModalidadBeca" OtherKey="IdModalidadBeca" Type="TModalidadBeca" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TDocumentoEntregado" Member="TDocumentoEntregado">
+    <Type Name="TDocumentoEntregado">
+      <Column Name="idDocumentoEntregado" Type="System.String" DbType="Char(5) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="enlace" Type="System.String" DbType="VarChar(200) NOT NULL" CanBeNull="false" />
+      <Column Name="idRequisitos" Type="System.String" DbType="Char(5) NOT NULL" CanBeNull="false" />
+      <Column Name="IdSolicitud" Type="System.String" DbType="Char(5) NOT NULL" CanBeNull="false" />
+      <Column Name="Estado" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Association Name="TDocumentoEntregado_TObservacion" Member="TObservacion" ThisKey="idDocumentoEntregado" OtherKey="idDocumentoEntregado" Type="TObservacion" />
+      <Association Name="TRequisitosBeca_TDocumentoEntregado" Member="TRequisitosBeca" ThisKey="idRequisitos" OtherKey="idRequisitos" Type="TRequisitosBeca" IsForeignKey="true" />
+      <Association Name="TSolicitudBeca_TDocumentoEntregado" Member="TSolicitudBeca" ThisKey="IdSolicitud" OtherKey="IdSolicitud" Type="TSolicitudBeca" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TDocumentoRequisito" Member="TDocumentoRequisito">
+    <Type Name="TDocumentoRequisito">
+      <Column Name="idDocumentoRequisito" Type="System.String" DbType="Char(5) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="nombre" Type="System.String" DbType="VarChar(150) NOT NULL" CanBeNull="false" />
+      <Column Name="enlaceFormato" Type="System.String" DbType="VarChar(250)" CanBeNull="true" />
+      <Association Name="TDocumentoRequisito_TRequisitosBeca" Member="TRequisitosBeca" ThisKey="idDocumentoRequisito" OtherKey="idDocumentoRequisito" Type="TRequisitosBeca" />
+    </Type>
+  </Table>
+  <Table Name="dbo.vistaSolicitudesPorModalidad" Member="vistaSolicitudesPorModalidad">
+    <Type Name="vistaSolicitudesPorModalidad">
+      <Column Name="Nombre" Type="System.String" DbType="VarChar(55) NOT NULL" CanBeNull="false" />
+      <Column Name="Cantidad" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.vistaSolicitudesPorEscuela" Member="vistaSolicitudesPorEscuela">
+    <Type Name="vistaSolicitudesPorEscuela">
+      <Column Name="Nombre" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Cantidad" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.vistaSolicitudesPorEstado" Member="vistaSolicitudesPorEstado">
+    <Type Name="vistaSolicitudesPorEstado">
+      <Column Name="Nombre" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Cantidad" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.vistaSolicitudesAprobadasPorEscuela" Member="vistaSolicitudesAprobadasPorEscuela">
+    <Type Name="vistaSolicitudesAprobadasPorEscuela">
+      <Column Name="Nombre" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Cantidad" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.vistaSolicitudesAprobadasPorModalidad" Member="vistaSolicitudesAprobadasPorModalidad">
+    <Type Name="vistaSolicitudesAprobadasPorModalidad">
+      <Column Name="Nombre" Type="System.String" DbType="VarChar(55) NOT NULL" CanBeNull="false" />
+      <Column Name="Cantidad" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Function Name="dbo.spLoginUsuario" Method="spLoginUsuario">
+    <Parameter Name="Correo" Parameter="correo" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="Contrasena" Parameter="contrasena" Type="System.String" DbType="VarChar(50)" />
+    <ElementType Name="spLoginUsuarioResult">
+      <Column Name="CodError" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Mensaje" Type="System.String" DbType="VarChar(16) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.spAgregarEncargado" Method="spAgregarEncargado">
+    <Parameter Name="Correo" Parameter="correo" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="Nombres" Parameter="nombres" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="Apellidos" Parameter="apellidos" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="Celular" Parameter="celular" Type="System.String" DbType="VarChar(9)" />
+    <Parameter Name="Direccion" Parameter="direccion" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="TipDocumento" Parameter="tipDocumento" Type="System.String" DbType="VarChar(1)" />
+    <Parameter Name="NumDocIdentidad" Parameter="numDocIdentidad" Type="System.String" DbType="VarChar(15)" />
+    <Parameter Name="Contrasena" Parameter="contrasena" Type="System.String" DbType="VarChar(50)" />
+    <ElementType Name="spAgregarEncargadoResult">
+      <Column Name="CodError" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Mensaje" Type="System.String" DbType="VarChar(34) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.spModificarUsuario" Method="spModificarUsuario">
+    <Parameter Name="IdUsuario" Parameter="idUsuario" Type="System.String" DbType="Char(5)" />
+    <Parameter Name="Nombres" Parameter="nombres" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="Apellidos" Parameter="apellidos" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="NumDocIdentidad" Parameter="numDocIdentidad" Type="System.String" DbType="VarChar(15)" />
+    <Parameter Name="Direccion" Parameter="direccion" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="Celular" Parameter="celular" Type="System.String" DbType="VarChar(9)" />
+    <Parameter Name="Correo" Parameter="correo" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="urlImagen" Type="System.String" DbType="NVarChar(255)" />
+    <ElementType Name="spModificarUsuarioResult">
+      <Column Name="CodError" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Mensaje" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.spAgregarImagen" Method="spAgregarImagen">
+    <Parameter Name="IdUsuario" Parameter="idUsuario" Type="System.String" DbType="Char(5)" />
+    <Parameter Name="urlImagen" Type="System.String" DbType="NVarChar(255)" />
+    <ElementType Name="spAgregarImagenResult">
+      <Column Name="CodError" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Mensaje" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.spListarRequisitoporModalidad" Method="spListarRequisitoporModalidad">
+    <Parameter Name="IdModalidad" Parameter="idModalidad" Type="System.String" DbType="Char(5)" />
+    <ElementType Name="spListarRequisitoporModalidadResult">
+      <Column Name="idDocumentoRequisito" Type="System.String" DbType="Char(5) NOT NULL" CanBeNull="false" />
+      <Column Name="nombre" Type="System.String" DbType="VarChar(150) NOT NULL" CanBeNull="false" />
+      <Column Name="opcional" Type="System.String" DbType="VarChar(15) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.spAgregarDocumentoEntregado" Method="spAgregarDocumentoEntregado">
+    <Parameter Name="enlace" Type="System.String" DbType="VarChar(200)" />
+    <Parameter Name="IdSolicitud" Parameter="idSolicitud" Type="System.String" DbType="Char(5)" />
+    <Parameter Name="idRequisitos" Type="System.String" DbType="Char(5)" />
+    <ElementType Name="spAgregarDocumentoEntregadoResult">
+      <Column Name="CodError" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Mensaje" Type="System.String" DbType="VarChar(33) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.spListarDocumentosPorSolicitud" Method="spListarDocumentosPorSolicitud">
+    <Parameter Name="IdSolicitud" Parameter="idSolicitud" Type="System.String" DbType="Char(5)" />
+    <ElementType Name="spListarDocumentosPorSolicitudResult">
+      <Column Name="idDocumentoRequisito" Type="System.String" DbType="Char(5) NOT NULL" CanBeNull="false" />
+      <Column Name="nombre" Type="System.String" DbType="VarChar(150) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.spAgregarSolicitud" Method="spAgregarSolicitud">
+    <Parameter Name="IdUsuario" Parameter="idUsuario" Type="System.String" DbType="VarChar(5)" />
+    <Parameter Name="IdModalidadBeca" Parameter="idModalidadBeca" Type="System.String" DbType="Char(5)" />
+    <ElementType Name="spAgregarSolicitudResult">
+      <Column Name="CodError" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Mensaje" Type="System.String" DbType="Char(5)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.spAgregarObservacion" Method="spAgregarObservacion">
+    <Parameter Name="IdDocumentoEntregado" Parameter="idDocumentoEntregado" Type="System.String" DbType="VarChar(5)" />
+    <Parameter Name="Descripcion" Parameter="descripcion" Type="System.String" DbType="VarChar(200)" />
+    <ElementType Name="spAgregarObservacionResult">
+      <Column Name="CodError" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Mensaje" Type="System.String" DbType="VarChar(31) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.spListarDocumentosPorUsuario" Method="spListarDocumentosPorUsuario">
+    <Parameter Name="IdUsuario" Parameter="idUsuario" Type="System.String" DbType="Char(5)" />
+    <ElementType Name="spListarDocumentosPorUsuarioResult">
+      <Column Name="idDocumentoRequisito" Type="System.String" DbType="Char(5) NOT NULL" CanBeNull="false" />
+      <Column Name="nombre" Type="System.String" DbType="VarChar(150) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.spAgregarEstudiante" Method="spAgregarEstudiante">
+    <Parameter Name="Correo" Parameter="correo" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="Nombres" Parameter="nombres" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="Apellidos" Parameter="apellidos" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="Celular" Parameter="celular" Type="System.String" DbType="VarChar(9)" />
+    <Parameter Name="Direccion" Parameter="direccion" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="TipDocumento" Parameter="tipDocumento" Type="System.String" DbType="VarChar(1)" />
+    <Parameter Name="NumDocIdentidad" Parameter="numDocIdentidad" Type="System.String" DbType="VarChar(15)" />
+    <Parameter Name="Contrasena" Parameter="contrasena" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="IdEscuela" Parameter="idEscuela" Type="System.String" DbType="Char(4)" />
+    <ElementType Name="spAgregarEstudianteResult">
+      <Column Name="CodError" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Mensaje" Type="System.String" DbType="VarChar(34) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+</Database>

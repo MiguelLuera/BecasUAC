@@ -1,0 +1,30 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30413.136
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "FrontEnd", "FrontEnd", "{BD0E6F9C-A561-41E3-9744-B5A5DE6DDDEE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fron_End", "Fron_End\Fron_End.csproj", "{06EF6097-3FA9-424F-A4EF-3EBC43F6FE47}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{06EF6097-3FA9-424F-A4EF-3EBC43F6FE47}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{06EF6097-3FA9-424F-A4EF-3EBC43F6FE47}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{06EF6097-3FA9-424F-A4EF-3EBC43F6FE47}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{06EF6097-3FA9-424F-A4EF-3EBC43F6FE47}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{06EF6097-3FA9-424F-A4EF-3EBC43F6FE47} = {BD0E6F9C-A561-41E3-9744-B5A5DE6DDDEE}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F9D5C0E1-4575-42FE-8688-3C8E164078CD}
+	EndGlobalSection
+EndGlobal
